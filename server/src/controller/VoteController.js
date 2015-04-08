@@ -15,39 +15,46 @@ export default class VoteController {
 	}
 
 	/** Returns a List of all Votes */
-	getVotes() {
-		return this.voteDatabase.mapAllVotes(function (v) {
-			return v;
+	getVotes(params, callback) {
+		this.voteDatabase.getAllVotes(callback);
+	}
+
+	getVoteById(params, callback) {
+		this.voteDatabase.getVoteById(params.voteId, function(err, vote) {
+			if (!vote) {
+				// vote not found
+				return callback(RequestError.notFound(`vote id ${params.voteId}`), vote);
+			}
+
+			callback(null, vote);
 		});
 	}
 
-	getVoteById(params) {
-		const vote = this.voteDatabase.getVoteById(params.voteId);
-		if (!vote) {
-			// invalid vote
-			return RequestError.notFound(`vote id ${params.voteId}`);
-		}
-
-		return vote;
-	}
-
-	registerVoting(params) {
+	registerVoting(params, callback) {
 		// retrieve vote and choice
-		const vote = this.getVoteById(params);
-		const choice = vote.choices.find((c) => c.id === params.choiceId);
-		if (!choice) {
-			// invalid choice
-			return RequestError.notFound(`choice id ${params.choiceId}`);
-		}
+		this.getVoteById(params, (err, vote) => {
+			if (err) { return callback(err); }
 
-		// increment voteCount
-		choice.voteCount = choice.voteCount + 1;
+			const choice = vote.choices.find((c) => c.id === params.choiceId);
+			if (!choice) {
+				// invalid choice
+				return callback(RequestError.notFound(`choice id ${params.choiceId}`));
+			}
 
-		// return updated vote
-		return vote;
+			// increment voteCount
+			choice.voteCount = choice.voteCount + 1;
+
+			// save vote
+			this.voteDatabase.store(vote, function (err, storedVote) {
+				callback(err, storedVote);
+			});
+
+			// return updated vote
+			//return callback(null, vote);
+		});
 	}
 
-	addVote(params, payload) {
+	addVote(params, payload, callback) {
 		for (let choice of payload.choices) {
 			choice.voteCount = 0;
 		}
@@ -58,7 +65,7 @@ export default class VoteController {
 			choices:     payload.choices
 		};
 
-		return this.voteDatabase.store(newVote);
+		this.voteDatabase.store(newVote, callback);
 
 	}
 

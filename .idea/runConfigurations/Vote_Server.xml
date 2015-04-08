@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Vote Server" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="$PATH$/iojs" path-to-js-file="_dist/server/index.js" node-parameters="--harmony-classes" working-dir="$PROJECT_DIR$">
+    <method />
+  </configuration>
+</component>

@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "babel-core": "^5.0.8",
-    "hapi": "^8.4.0"
+    "hapi": "^8.4.0",
+    "mongoose": "^4.0.1"
   }
 }

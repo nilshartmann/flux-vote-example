@@ -36,11 +36,6 @@ export default class VoteComposerComponent extends React.Component {
 	}
 
 	_save() {
-
-		console.log("CHOICES: ", this.state.choices);
-		const ba = this.state.choices.slice(0, -1);
-		console.log("hinterher: ", ba);
-
 		const newVote = {
 			title:       this.state.title,
 			description: this.state.description,

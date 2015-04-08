@@ -9,24 +9,18 @@
 
 const votetest = require('./index.js'),
 	expect = votetest.expect,
+	check = votetest.check,
 	Bootstrap = votetest.Bootstrap;
 
 describe('VoteServer', function () {
 
 	var voteServer;
 
-	// make sure 'done' is called even when a chai assertion failed
-	function check(done, fn) {
-		try {
-			fn();
-			done();
-		} catch (err) {
-			done(err);
-		}
-	}
-
 	before(function (done) {
-		Bootstrap.bootstrap(votetest.createUnitTestData(), 6666, function (runningServer) {
+		Bootstrap.bootstrap({
+			webserverPort: 6666,
+			db:            {initialData: votetest.createUnitTestData()}
+		}, function (runningServer) {
 			voteServer = runningServer;
 			done();
 		});

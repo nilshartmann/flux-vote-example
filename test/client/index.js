@@ -12,7 +12,7 @@ const sinon = require('sinon');
 
 // Server components needed for integration tests
 const VoteSampleData = require('../../_dist/server/mock/VoteSampleData');
-const VoteDatabase = require('../../_dist/server/db/VoteDatabase');
+const InMemoryVoteDatabase = require('../../_dist/server/db/InMemoryVoteDatabase');
 const VoteController = require('../../_dist/server/controller/VoteController');
 
 const Bootstrap = require('../../_dist/server/Bootstrap');
@@ -38,8 +38,7 @@ module.exports = {
 	sinon,
 	createUnitTestData,
 
-
-	VoteDatabase,
+	InMemoryVoteDatabase,
 	VoteController,
 
 	Bootstrap,

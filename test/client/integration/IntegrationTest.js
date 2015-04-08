@@ -12,7 +12,7 @@ const votetest = require('../index'),
 	Backend = votetest.Backend,
 	FetchUtil = votetest.FetchUtil,
 	VoteStore = votetest.VoteStore,
-	VoteDatabase = votetest.VoteDatabase,
+	InMemoryVoteDatabase = votetest.InMemoryVoteDatabase,
 	VotingStore = votetest.VotingStore,
 	VoteController = votetest.VoteController,
 	VoteListActionsCreator = votetest.VoteListActionsCreator,
@@ -35,7 +35,7 @@ describe('Data Flow', function () {
 
 	beforeEach(function () {
 		testData = votetest.createUnitTestData();
-		voteController = new VoteController(new VoteDatabase(testData));
+		voteController = new VoteController(new InMemoryVoteDatabase({initialData: testData}));
 	});
 
 	afterEach(function () {
@@ -51,7 +51,9 @@ describe('Data Flow', function () {
 	it('should pass allVotes from Backend To VoteStore', function () {
 		// Prepare stub
 		prepareGetJsonStub(function (p, cb) {
-			cb(voteController.getVotes());
+			voteController.getVotes({}, function(err, result) {
+				cb(result);
+			});
 		});
 
 		// Trigger action...
@@ -89,7 +91,9 @@ describe('Data Flow', function () {
 			const split = p.split('/');
 			const voteId = split[3];
 			const choiceId = split[5];
-			cb(voteController.registerVoting({'voteId': voteId, 'choiceId': choiceId}))
+			voteController.registerVoting({'voteId': voteId, 'choiceId': choiceId}, function(err, result){
+				return cb(result);
+			});
 		});
 
 		// Trigger

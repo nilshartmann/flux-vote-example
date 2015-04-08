@@ -7,10 +7,8 @@
 // -------------------------------------------------------------------------------------
 "use strict";
 
-export default class RequestError extends Error {
+export default class RequestError {
 	constructor(code, message) {
-		super(message);
-		this.message = message;
 		this.details = {
 			code,
 			message
@@ -18,7 +16,7 @@ export default class RequestError extends Error {
 	}
 
 	static notFound(msg) {
-		throw new RequestError(404, msg);
+		return new RequestError(404, msg);
 	}
 }
 

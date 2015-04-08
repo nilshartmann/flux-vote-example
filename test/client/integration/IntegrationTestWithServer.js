@@ -29,7 +29,7 @@ class TestEnvironment {
 
 		const self = this;
 		this.testData = votetest.createUnitTestData();
-		Bootstrap.bootstrap(this.testData, 6666, function (runningServer) {
+		Bootstrap.bootstrap({db: {initialData: this.testData}, webserverPort: 6666}, function (runningServer) {
 			self.voteServer = runningServer;
 
 			// Prepare stubs

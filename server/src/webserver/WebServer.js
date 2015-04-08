@@ -30,30 +30,38 @@ export default class WebServer {
 		});
 	}
 
-	addRoute(methodAndRoute, handler) {
+	addRoute(methodAndRoute, payloadNeeded, handler) {
+		if (arguments.length===2) {
+			handler = payloadNeeded;
+			payloadNeeded = false;
+		}
+
 		const ix = methodAndRoute.indexOf(' ');
 		const method = methodAndRoute.substr(0, ix);
 		const path = methodAndRoute.substr(ix + 1);
 
 		var runner = function (request, reply) {
-
 			const params = {};
 			for (let i in request.params) {
 				params[i] = encodeURIComponent(request.params[i]);
 			}
 
-			var result;
-			try {
-				result = handler(params, request.payload);
-			} catch (e) {
-				if (e instanceof RequestError) {
-					return reply(e.details).code(e.details.code);
+			function callback(err, result) {
+				if (err) {
+					if (err instanceof RequestError) {
+						return reply(err.details).code(err.details.code);
+					}
+
+					console.log("ERR in Request Handler: ", err);
+					return reply(err).code(500);
 				}
 
-				throw e;
+				return reply(result);
 			}
 
-			return reply(result);
+			handler(params,
+				(payloadNeeded ? request.payload : callback),
+				(payloadNeeded ? callback : undefined));
 		};
 
 		this.server.route({
