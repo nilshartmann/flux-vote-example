@@ -26,6 +26,7 @@ const VotingStore = require('../../_dist/client/app/stores/VotingStore');
 
 const VoteListActionsCreator = require('../../_dist/client/app/actions/VoteListActionsCreator');
 const VotingActionsCreator = require('../../_dist/client/app/actions/VotingActionsCreator');
+const VoteComposerActionsCreator = require('../../_dist/client/app/actions/VoteComposerActionsCreator');
 
 function createUnitTestData() {
 	return VoteSampleData.createUnitTestData();
@@ -50,7 +51,8 @@ module.exports = {
 	VotingStore,
 
 	VoteListActionsCreator,
-	VotingActionsCreator
+	VotingActionsCreator,
+	VoteComposerActionsCreator
 };
 
 

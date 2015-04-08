@@ -39,7 +39,7 @@ export default class VoteComposerComponent extends React.Component {
 		const newVote = {
 			title:       this.state.title,
 			description: this.state.description,
-			choices:     this.state.choices
+			choices: this.state.choices.slice(0, -1)
 		};
 		VoteComposerActionsCreator.addVote(newVote);
 		this.setState(VoteComposerComponent._emptyState());
@@ -134,7 +134,7 @@ export default class VoteComposerComponent extends React.Component {
 						<div className="col offset-s1 s9">
 							<a
 								className={this.state.formCompleted?'waves-effect waves-light btn':'waves-effect waves-light btn disabled'}
-								onClick={this._save.bind(this)}><i
+								onClick={this.state.formCompleted?this._save.bind(this):null}><i
 								className="mdi-content-add left"></i>Save</a>
 							<a className="waves-effect waves-light btn-flat right" onClick={this._cancel.bind(this)}><i
 								className="mdi-content-clear right"></i></a>

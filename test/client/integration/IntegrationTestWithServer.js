@@ -14,6 +14,7 @@ const votetest = require('../index'),
 	VotingStore = votetest.VotingStore,
 	VoteListActionsCreator = votetest.VoteListActionsCreator,
 	VotingActionsCreator = votetest.VotingActionsCreator,
+	VoteComposerActionsCreator = votetest.VoteComposerActionsCreator,
 	Bootstrap = votetest.Bootstrap,
 	FetchUtil = votetest.FetchUtil,
 	sinon = votetest.sinon;
@@ -46,6 +47,7 @@ class TestEnvironment {
 			}
 			const options = {
 				method: method.toLocaleUpperCase(),
+				payload: obj,
 				url:    path
 			};
 			console.log("## options: ##", options);
@@ -112,10 +114,10 @@ describe('Data Flow with Server', function () {
 
 		// verify (since processing is async, we'll have to wait until the listener is notified)
 		checkStore(done, VoteStore, function () {
-				const allVotes = VoteStore.getAllVotes();
-				expect(allVotes).to.be.an('array');
-				expect(allVotes).to.have.length(3);
-				expect(allVotes[0].id).to.be.equal('vote_1');
+			const allVotes = VoteStore.getAllVotes();
+			expect(allVotes).to.be.an('array');
+			expect(allVotes).to.have.length(3);
+			expect(allVotes[0].id).to.be.equal('vote_1');
 		});
 	});
 
@@ -144,6 +146,34 @@ describe('Data Flow with Server', function () {
 			expect(currentVote.id).to.be.equal('vote_3');
 			expect(currentVote.choices).to.be.an('array');
 			expect(currentVote.choices[4].voteCount).to.be.equal(801);
+		});
+	});
+
+	it('should add new votes', function (done) {
+		const newRawVote = {
+			title:       'How do you like our service',
+			description: 'Please give us a feedback',
+			choices:     [
+				{
+					id:    'f1',
+					title: 'Awesome'
+				},
+				{
+					id:    'f2',
+					title: 'Poor'
+				}
+			]
+		};
+
+		VoteComposerActionsCreator.addVote(newRawVote);
+
+		// Verify
+		checkStore(done, VoteStore, function () {
+			const allVotes = VoteStore.getAllVotes();
+			expect(allVotes).to.be.an('array');
+			expect(allVotes).length.to.be(4);
+			expect(allVotes[3].title).to.equal(newRawVote.title);
+			expect(allVotes[3].choices).to.be.an('array');
 		});
 	});
 });
