@@ -9,6 +9,7 @@ var del = require('del');
 var gulpSequence = require('gulp-sequence');
 var argv = require('yargs').argv;
 var mocha = require('gulp-mocha');
+var sourcemaps = require('gulp-sourcemaps');
 
 var CONFIG = {
 	client: {
@@ -64,7 +65,9 @@ gulp.task("client:js", function () {
 		src = src.pipe(plumber()).pipe(watch(CONFIG.client.js));
 	}
 	src = src.pipe(logger({showChange: true}))
+		.pipe(sourcemaps.init())
 		.pipe(babel())
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(CONFIG.client.dist +'/app'));
 
 	return src;
