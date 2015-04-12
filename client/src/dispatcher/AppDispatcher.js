@@ -7,8 +7,7 @@
 // -------------------------------------------------------------------------------------
 "use strict";
 
-
-import {Dispatcher} from '../../libs/bower/flux/dist/Flux';
+import {Dispatcher} from 'Flux';
 
 const AppDispatcher = new Dispatcher();
 

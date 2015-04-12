@@ -7,7 +7,7 @@
 // -------------------------------------------------------------------------------------
 "use strict";
 
-import React from '../../libs/bower/react/react';
+import React from 'react';
 import VotingActionsCreator from '../actions/VotingActionsCreator'
 
 export default class VoteListCurrentRowComponent extends React.Component {

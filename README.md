@@ -31,8 +31,8 @@ Technologies and frameworks used
 * React and Flux
 * Babel for transpiling ES6 code to ES5
 * Mocha, Chai and Sinon for testing
-* bower for client component management
-* npm for server module management
+* npm for client and server module management
+* browserify for bundling client modules
 * gulp for build
 * (optional) MongoDb for storing the data
 

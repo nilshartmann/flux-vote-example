@@ -6,8 +6,8 @@
 // --- Copyright (c) 2015 Nils Hartmann (http://nilshartmann.net).
 // -------------------------------------------------------------------------------------
 "use strict";
-import assign from '../../libs/object-assign/object-assign';
-import EventEmitter from '../../libs/events/events';
+import assign from 'object-assign';
+import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 

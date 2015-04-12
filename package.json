@@ -8,12 +8,13 @@
     "url": "https://nilshartmann@bitbucket.org/nilshartmann/flux-vote-example.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "echo 'Copy Babel browser-polyfill to client libs' && mkdir -p ./client/libs/babel-core && cp ./node_modules/babel-core/browser-polyfill.js ./client/libs/babel-core"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nils Hartmann",
   "license": "EPL",
   "devDependencies": {
+    "babelify": "^6.0.2",
+    "browserify": "^9.0.8",
     "chai": "^2.2.0",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
@@ -25,12 +26,23 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-watch": "^4.2.2",
     "mocha": "^2.2.1",
+    "parcelify": "^1.0.1",
     "sinon": "^1.14.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.1.0",
     "yargs": "^3.6.0"
   },
   "dependencies": {
     "babel-core": "^5.0.8",
+    "es6-module-loader": "^0.16.5",
+    "fetch": "^0.3.6",
+    "flux": "^2.0.1",
     "hapi": "^8.4.0",
-    "mongoose": "^4.0.1"
+    "materialize-css": "^0.96.1",
+    "mongoose": "^4.0.1",
+    "object-assign": "^2.0.0",
+    "react": "^0.13.1",
+    "systemjs": "^0.16.7"
   }
 }

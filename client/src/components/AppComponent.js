@@ -9,7 +9,7 @@
 
 "use strict";
 
-import React from '../../libs/bower/react/react';
+import React from 'react';
 import VoteStore from '../stores/VoteStore';
 import VotingStore from '../stores/VotingStore';
 import VoteListComponent from './VoteListComponent'
